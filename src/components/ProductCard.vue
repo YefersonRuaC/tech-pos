@@ -1,0 +1,38 @@
+<script setup>
+    import { useCartStore } from '@/stores/cart';
+    import { formatCurrency } from '@/helpers';
+
+    const cart = useCartStore()
+
+    defineProps({
+        product: {
+            type: Object
+        }
+    })
+</script>
+
+<template>
+    <div class="rounded bg-white shadow relative">
+        <img 
+            :src="product.image" 
+            :alt="product.name + ' image'"
+            class="rounded"
+        />
+
+        <div class="px-4 py-3 space-y-2">
+            <h3 class="text-lg font-black text-gray-600">{{ product.name }}</h3>
+            <p class="text-gray-500">Stock: {{ product.availability }}</p>
+            <p class="font-bold text-xl text-gray-900">{{ formatCurrency(product.price) }}</p>
+        </div>
+
+        <button
+            type="button"
+            class="absolute top-5 right-3"
+            @click="cart.addItem(product)"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-9 w-9 bg-sky-400 hover:bg-sky-500 rounded-full text-white transition-all">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>             
+        </button>
+    </div>
+</template>
